@@ -1,4 +1,4 @@
-version: '3.3'
+version: '2'
 
 services:
   post_db:
@@ -12,20 +12,20 @@ services:
         - post_db
 
   ui:
-    image: ${USER_NAME}/ui:${UI_TAG:-1.0}
+    image: tenki/ui:5.0
     ports:
-      - ${UI_PORT:-9292}:9292/tcp
+      - 9292:9292/tcp
     networks:
       - frontend
       
   post:
-    image: ${USER_NAME}/post:${POST_TAG:-1.0}
+    image: tenki/post:4.0
     networks:
       - frontend
       - backend
 
   comment:
-    image: ${USER_NAME}/comment:${COMMENT_TAG:-1.0}
+    image: tenki/comment:4.0
     networks:
       - frontend
       - backend
