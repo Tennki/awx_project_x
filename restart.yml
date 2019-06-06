@@ -1,0 +1,29 @@
+
+- name: Start app
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: Create project dir
+      file:
+        path: /srv/reddit
+        state: directory
+
+    - name: Copy compose file
+      copy:
+        src: "{{ lookup('env', 'PWD') }}/docker-compose.yml"
+        dest: "/srv/reddit/docker-compose.yml"
+      
+    - name: Run application
+      command: docker-compose up -d
+      args:
+        chdir: /srv/reddit/
+      environment:
+        - USER_NAME: "tenki"
+          UI_TAG: 5.0
+          POST_TAG: 4.0
+          COMMENT_TAG: 4.0
+          COMPOSE_PROJECT_NAME: monitoring
+
+
